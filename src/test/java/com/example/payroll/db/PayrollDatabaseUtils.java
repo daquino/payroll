@@ -11,5 +11,10 @@ public class PayrollDatabaseUtils {
         field.setAccessible(true);
         Map<Long, Employee> employees = (Map<Long, Employee>) field.get(null);
         employees.clear();
+
+        field = PayrollDatabase.class.getDeclaredField("unionMembers");
+        field.setAccessible(true);
+        Map<Long, Employee> unionMembers = (Map<Long, Employee>) field.get(null);
+        unionMembers.clear();
     }
 }

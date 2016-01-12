@@ -6,12 +6,14 @@ import com.example.payroll.model.TimeCard;
 import com.example.payroll.model.impl.HourlyClassification;
 import com.example.payroll.transaction.Transaction;
 
+import java.time.LocalDate;
+
 public class TimeCardTransaction implements Transaction {
-    private final long date;
+    private final LocalDate date;
     private final double hours;
     private final int empId;
 
-    public TimeCardTransaction(final long date, final double hours, final int empId) {
+    public TimeCardTransaction(final LocalDate date, final double hours, final int empId) {
         this.date = date;
         this.hours = hours;
         this.empId = empId;

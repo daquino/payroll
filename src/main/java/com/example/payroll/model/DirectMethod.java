@@ -17,7 +17,7 @@ public class DirectMethod implements PaymentMethod {
         return account;
     }
 
-    public void sendPayment(final int amount) {
+    public void pay(final Paycheck paycheck) {
 
     }
 }

@@ -1,10 +1,12 @@
 package com.example.payroll.transaction.impl;
 
 import com.example.payroll.db.PayrollDatabase;
+import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Employee;
 import com.example.payroll.model.SalesReceipt;
 import com.example.payroll.model.impl.CommissionClassification;
 import com.example.payroll.transaction.Transaction;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -19,6 +21,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SalesReceiptTransactionTest {
     private Transaction transaction;
+
+    @Before
+    public void setUp() throws Exception {
+        PayrollDatabaseUtils.clearDatabase();
+    }
 
     @Test
     public void testSalesReceiptTransaction() throws Exception {

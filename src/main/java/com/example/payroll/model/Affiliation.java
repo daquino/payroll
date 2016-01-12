@@ -1,14 +1,7 @@
 package com.example.payroll.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public interface Affiliation {
-    double getFees(LocalDateTime feeDate);
-
-    Affiliation EMPTY = new NoAffiliation();
-    class NoAffiliation implements Affiliation {
-        public double getFees(final LocalDateTime feeDate) {
-            return 0;
-        }
-    }
+    double calculateDeductions(LocalDate payPeriodStartDate, LocalDate payPeriodEndDate);
 }

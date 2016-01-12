@@ -2,8 +2,7 @@ package com.example.payroll.model.impl;
 
 import com.example.payroll.model.PaymentClassification;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class SalariedClassification implements PaymentClassification {
     private final double salary;
@@ -16,7 +15,7 @@ public class SalariedClassification implements PaymentClassification {
         return salary;
     }
 
-    public BigDecimal calculatePay(final Date date) {
-        return null;
+    public double calculatePay(final LocalDate payPeriodStartDate, final LocalDate payPeriodEndDate) {
+        return salary;
     }
 }

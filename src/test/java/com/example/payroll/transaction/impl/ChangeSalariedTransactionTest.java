@@ -1,12 +1,14 @@
 package com.example.payroll.transaction.impl;
 
 import com.example.payroll.db.PayrollDatabase;
+import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Employee;
 import com.example.payroll.model.impl.HourlyClassification;
 import com.example.payroll.model.impl.MonthlySchedule;
 import com.example.payroll.model.impl.SalariedClassification;
 import com.example.payroll.model.impl.WeeklySchedule;
 import com.example.payroll.transaction.Transaction;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -15,6 +17,11 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 public class ChangeSalariedTransactionTest {
     private Transaction transaction;
+
+    @Before
+    public void setUp() throws Exception {
+        PayrollDatabaseUtils.clearDatabase();
+    }
 
     @Test
     public void testChangeSalariedTransaction() throws Exception {

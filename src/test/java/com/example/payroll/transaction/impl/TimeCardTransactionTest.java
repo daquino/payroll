@@ -9,6 +9,8 @@ import com.example.payroll.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -25,13 +27,13 @@ public class TimeCardTransactionTest {
         int empId = 2;
         transaction = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         transaction.execute();
-        transaction = new TimeCardTransaction(20151228, 8.0, empId);
+        transaction = new TimeCardTransaction(LocalDate.of(2015, 12, 28), 8.0, empId);
         transaction.execute();
         Employee employee = PayrollDatabase.getEmployee(empId);
         assertThat(employee, is(not(nullValue())));
         HourlyClassification classification = (HourlyClassification) employee.getPaymentClassification();
         assertThat(classification, is(not(nullValue())));
-        TimeCard timeCard = classification.getTimeCard(20151228);
+        TimeCard timeCard = classification.getTimeCard(LocalDate.of(2015, 12, 28));
         assertThat(timeCard, is(not(nullValue())));
         assertThat(timeCard.getHours(), is(8.0));
     }
@@ -39,7 +41,7 @@ public class TimeCardTransactionTest {
     @Test(expected = RuntimeException.class)
     public void testTimeCardTransactionFailsForNonExistingEmployee() throws Exception {
         int empId = 2;
-        transaction = new TimeCardTransaction(20151228, 8.0, empId);
+        transaction = new TimeCardTransaction(LocalDate.of(2015, 12, 28), 8.0, empId);
         transaction.execute();
     }
 
@@ -48,7 +50,7 @@ public class TimeCardTransactionTest {
         int empId = 2;
         transaction = new AddSalariedEmployee(empId, "Bill", "Home", 2500);
         transaction.execute();
-        transaction = new TimeCardTransaction(20151228, 8.0, empId);
+        transaction = new TimeCardTransaction(LocalDate.of(2015, 12, 28), 8.0, empId);
         transaction.execute();
     }
 }

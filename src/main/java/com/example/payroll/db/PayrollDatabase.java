@@ -2,6 +2,7 @@ package com.example.payroll.db;
 
 import com.example.payroll.model.Employee;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,5 +31,14 @@ public class PayrollDatabase {
     public static Employee getUnionMember(final int memberId) {
         Employee employee = unionMembers.get(memberId);
         return employee != null ? employee : Employee.EMPTY;
+    }
+
+    public static void removeUnionMember(final int memberId) {
+        unionMembers.remove(memberId);
+    }
+
+
+    public static Collection<Employee> getAllEmployees() {
+        return employees.values();
     }
 }

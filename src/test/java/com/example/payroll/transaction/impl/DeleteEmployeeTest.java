@@ -1,8 +1,10 @@
 package com.example.payroll.transaction.impl;
 
 import com.example.payroll.db.PayrollDatabase;
+import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Employee;
 import com.example.payroll.transaction.Transaction;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -13,6 +15,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class DeleteEmployeeTest {
     private Transaction transaction;
     private Employee employee;
+
+    @Before
+    public void setUp() throws Exception {
+        PayrollDatabaseUtils.clearDatabase();
+    }
 
     @Test
     public void testDeleteEmployee() throws Exception {

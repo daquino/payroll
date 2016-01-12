@@ -1,14 +1,8 @@
 package com.example.payroll.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public interface PaymentSchedule {
-    boolean isPayDate(LocalDateTime date);
-
-    PaymentSchedule EMPTY = new EmptyPaymentSchedule();
-    class EmptyPaymentSchedule implements PaymentSchedule {
-        public boolean isPayDate(final LocalDateTime date) {
-            return false;
-        }
-    }
+    boolean isPayDate(LocalDate date);
+    LocalDate getPayPeriodStartDate(LocalDate payDate);
 }

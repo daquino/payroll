@@ -1,16 +1,8 @@
 package com.example.payroll.model;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface PaymentClassification {
-    BigDecimal calculatePay(Date date);
+    double calculatePay(LocalDate payPeriodStartDate, LocalDate payPeriodEndDate);
 
-    PaymentClassification EMPTY = new EmptyPaymentClassification();
-    class EmptyPaymentClassification implements PaymentClassification {
-
-        public BigDecimal calculatePay(final Date date) {
-            return BigDecimal.ZERO;
-        }
-    }
 }

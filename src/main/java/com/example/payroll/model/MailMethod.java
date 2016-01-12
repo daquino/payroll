@@ -11,7 +11,7 @@ public class MailMethod implements PaymentMethod {
         return address;
     }
 
-    public void sendPayment(final int amount) {
+    public void pay(final Paycheck paycheck) {
 
     }
 }
