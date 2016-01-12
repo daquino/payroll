@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
+
 public class PaydayTransaction implements Transaction {
     private final LocalDate payDate;
     private final Map<Integer, Paycheck> paychecks;
@@ -19,7 +21,7 @@ public class PaydayTransaction implements Transaction {
     }
 
     public void execute() {
-        Collection<Employee> employees = PayrollDatabase.getAllEmployees();
+        Collection<Employee> employees = GlobalPayrollDatabase.getAllEmployees();
         for(Employee employee : employees) {
             if(employee.isPayDate(payDate)) {
                 Paycheck paycheck = new Paycheck(employee.getPayPeriodStartDate(payDate), payDate);

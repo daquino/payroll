@@ -8,6 +8,8 @@ import com.example.payroll.transaction.Transaction;
 
 import java.time.LocalDate;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
+
 public class ServiceChargeTransaction implements Transaction {
     private final int memberId;
     private final LocalDate chargeDate;
@@ -19,7 +21,7 @@ public class ServiceChargeTransaction implements Transaction {
     }
 
     public void execute() {
-        Employee employee = PayrollDatabase.getUnionMember(memberId);
+        Employee employee = GlobalPayrollDatabase.getUnionMember(memberId);
         if(employee != null) {
             if(employee.getAffiliation() instanceof UnionAffiliation) {
                 UnionAffiliation affiliation = (UnionAffiliation) employee.getAffiliation();

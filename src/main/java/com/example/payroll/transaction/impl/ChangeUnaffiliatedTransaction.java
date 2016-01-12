@@ -6,6 +6,8 @@ import com.example.payroll.model.Employee;
 import com.example.payroll.model.UnionAffiliation;
 import com.example.payroll.model.impl.NoAffiliation;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
+
 public class ChangeUnaffiliatedTransaction extends ChangeAffiliationTransaction {
     public ChangeUnaffiliatedTransaction(final int empId) {
         super(empId);
@@ -15,7 +17,7 @@ public class ChangeUnaffiliatedTransaction extends ChangeAffiliationTransaction 
     protected void recordMembership(final Employee employee) {
         if(employee.getAffiliation() instanceof UnionAffiliation) {
             UnionAffiliation unionAffiliation = (UnionAffiliation) employee.getAffiliation();
-            PayrollDatabase.removeUnionMember(unionAffiliation.getMemberId());
+            GlobalPayrollDatabase.removeUnionMember(unionAffiliation.getMemberId());
         }
     }
 

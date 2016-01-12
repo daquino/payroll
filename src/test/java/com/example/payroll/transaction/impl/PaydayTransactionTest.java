@@ -2,6 +2,7 @@ package com.example.payroll.transaction.impl;
 
 import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Paycheck;
+import com.example.payroll.transaction.BaseTransactionTest;
 import com.example.payroll.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import java.time.LocalTime;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PaydayTransactionTest {
+public class PaydayTransactionTest extends BaseTransactionTest {
     Transaction transaction;
 
     @Before

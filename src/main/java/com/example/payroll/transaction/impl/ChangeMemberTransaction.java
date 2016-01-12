@@ -5,6 +5,8 @@ import com.example.payroll.model.Affiliation;
 import com.example.payroll.model.Employee;
 import com.example.payroll.model.UnionAffiliation;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
+
 public class ChangeMemberTransaction extends ChangeAffiliationTransaction {
     private final int memberId;
     private final double dues;
@@ -17,7 +19,7 @@ public class ChangeMemberTransaction extends ChangeAffiliationTransaction {
 
     @Override
     protected void recordMembership(final Employee employee) {
-        PayrollDatabase.addUnionMember(memberId, employee);
+        GlobalPayrollDatabase.addUnionMember(memberId, employee);
     }
 
     @Override

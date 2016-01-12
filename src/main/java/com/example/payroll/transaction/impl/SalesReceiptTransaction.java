@@ -9,6 +9,8 @@ import com.example.payroll.transaction.Transaction;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
+
 public class SalesReceiptTransaction implements Transaction {
     private LocalDateTime salesDate;
     private double salesAmount;
@@ -20,7 +22,7 @@ public class SalesReceiptTransaction implements Transaction {
     }
 
     public void execute() {
-        Employee employee = PayrollDatabase.getEmployee(empId);
+        Employee employee = GlobalPayrollDatabase.getEmployee(empId);
         if(employee != Employee.EMPTY) {
             if(employee.getPaymentClassification() instanceof  CommissionClassification) {
                 CommissionClassification commissionClassification = (CommissionClassification) employee.getPaymentClassification();

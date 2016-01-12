@@ -1,7 +1,8 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.transaction.Transaction;
+
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
 
 public class DeleteEmployeeTransaction implements Transaction {
     private final int empId;
@@ -10,6 +11,6 @@ public class DeleteEmployeeTransaction implements Transaction {
     }
 
     public void execute() {
-        PayrollDatabase.deleteEmployee(empId);
+        GlobalPayrollDatabase.deleteEmployee(empId);
     }
 }

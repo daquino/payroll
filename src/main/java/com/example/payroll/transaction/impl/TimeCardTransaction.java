@@ -8,6 +8,8 @@ import com.example.payroll.transaction.Transaction;
 
 import java.time.LocalDate;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
+
 public class TimeCardTransaction implements Transaction {
     private final LocalDate date;
     private final double hours;
@@ -20,7 +22,7 @@ public class TimeCardTransaction implements Transaction {
     }
 
     public void execute() {
-        Employee employee = PayrollDatabase.getEmployee(empId);
+        Employee employee = GlobalPayrollDatabase.getEmployee(empId);
         if(employee != Employee.EMPTY) {
             if(employee.getPaymentClassification() instanceof HourlyClassification) {
                 HourlyClassification classification = (HourlyClassification) employee.getPaymentClassification();

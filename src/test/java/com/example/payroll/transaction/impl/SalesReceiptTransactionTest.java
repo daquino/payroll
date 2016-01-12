@@ -1,25 +1,21 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Employee;
 import com.example.payroll.model.SalesReceipt;
 import com.example.payroll.model.impl.CommissionClassification;
+import com.example.payroll.transaction.BaseTransactionTest;
 import com.example.payroll.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Date;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SalesReceiptTransactionTest {
+public class SalesReceiptTransactionTest extends BaseTransactionTest {
     private Transaction transaction;
 
     @Before
@@ -37,7 +33,7 @@ public class SalesReceiptTransactionTest {
         transaction.execute();
         transaction = new SalesReceiptTransaction(date, salesAmount, empId);
         transaction.execute();
-        Employee employee = PayrollDatabase.getEmployee(empId);
+        Employee employee = GlobalPayrollDatabase.getEmployee(empId);
         assertThat(employee, is(not(nullValue())));
         CommissionClassification commissionClassification = (CommissionClassification) employee.getPaymentClassification();
         assertThat(commissionClassification, is(not(nullValue())));

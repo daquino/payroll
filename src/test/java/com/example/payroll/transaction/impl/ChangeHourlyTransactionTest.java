@@ -1,21 +1,22 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Employee;
 import com.example.payroll.model.impl.HourlyClassification;
 import com.example.payroll.model.impl.MonthlySchedule;
 import com.example.payroll.model.impl.SalariedClassification;
 import com.example.payroll.model.impl.WeeklySchedule;
+import com.example.payroll.transaction.BaseTransactionTest;
 import com.example.payroll.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
-public class ChangeHourlyTransactionTest {
+public class ChangeHourlyTransactionTest extends BaseTransactionTest {
     private Transaction transaction;
 
     @Before
@@ -30,7 +31,7 @@ public class ChangeHourlyTransactionTest {
         transaction = new AddSalariedEmployee(empId, "Bob", "Home", 75000);
         transaction.execute();
 
-        employee = PayrollDatabase.getEmployee(empId);
+        employee = GlobalPayrollDatabase.getEmployee(empId);
         assertThat(employee.getPaymentClassification(), is(instanceOf(SalariedClassification.class)));
         assertThat(employee.getPaymentSchedule(), is(instanceOf(MonthlySchedule.class)));
 

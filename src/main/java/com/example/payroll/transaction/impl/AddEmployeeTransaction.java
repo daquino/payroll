@@ -8,6 +8,8 @@ import com.example.payroll.model.PaymentSchedule;
 import com.example.payroll.model.impl.HoldMethod;
 import com.example.payroll.transaction.Transaction;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
+
 public abstract class AddEmployeeTransaction implements Transaction {
     private final int itsEmpId;
     private final String itsName;
@@ -27,7 +29,7 @@ public abstract class AddEmployeeTransaction implements Transaction {
         employee.setPaymentClassification(paymentClassification);
         employee.setPaymentSchedule(paymentSchedule);
         employee.setPaymentMethod(paymentMethod);
-        PayrollDatabase.addEmployee(itsEmpId, employee);
+        GlobalPayrollDatabase.addEmployee(itsEmpId, employee);
     }
 
     abstract protected PaymentClassification getClassification();

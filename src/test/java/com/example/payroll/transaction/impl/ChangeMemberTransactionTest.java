@@ -1,18 +1,19 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Affiliation;
 import com.example.payroll.model.Employee;
 import com.example.payroll.model.UnionAffiliation;
+import com.example.payroll.transaction.BaseTransactionTest;
 import com.example.payroll.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ChangeMemberTransactionTest {
+public class ChangeMemberTransactionTest extends BaseTransactionTest {
     private Transaction transaction;
 
     @Before
@@ -28,13 +29,13 @@ public class ChangeMemberTransactionTest {
         transaction.execute();
         transaction = new ChangeMemberTransaction(empId, memberId, 99.42);
         transaction.execute();
-        Employee employee = PayrollDatabase.getEmployee(empId);
+        Employee employee = GlobalPayrollDatabase.getEmployee(empId);
         assertThat(employee, is(not(nullValue())));
         Affiliation affiliation = employee.getAffiliation();
         assertThat(affiliation, is(not(nullValue())));
         UnionAffiliation unionAffiliation = (UnionAffiliation) affiliation;
         assertThat(unionAffiliation.getDues(), is(99.42));
-        Employee member = PayrollDatabase.getUnionMember(memberId);
+        Employee member = GlobalPayrollDatabase.getUnionMember(memberId);
         assertThat(employee, is(member));
     }
 }

@@ -1,19 +1,19 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.DirectMethod;
 import com.example.payroll.model.Employee;
-import com.example.payroll.model.PaymentMethod;
 import com.example.payroll.model.impl.EmptyPaymentMethod;
+import com.example.payroll.transaction.BaseTransactionTest;
 import com.example.payroll.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class ChangeDirectTransactionTest {
+public class ChangeDirectTransactionTest extends BaseTransactionTest {
     private Transaction transaction;
 
     @Before
@@ -27,7 +27,7 @@ public class ChangeDirectTransactionTest {
         Employee employee;
         transaction = new AddHourlyEmployee(empId, "Bob", "home", 25.75);
         transaction.execute();
-        employee = PayrollDatabase.getEmployee(empId);
+        employee = GlobalPayrollDatabase.getEmployee(empId);
         employee.setPaymentMethod(new EmptyPaymentMethod());
 
         transaction = new ChangeDirectTransaction(empId, "US Bank", "123456789123");

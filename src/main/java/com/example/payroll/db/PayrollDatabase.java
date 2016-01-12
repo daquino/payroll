@@ -3,42 +3,24 @@ package com.example.payroll.db;
 import com.example.payroll.model.Employee;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class PayrollDatabase {
-    private static Map<Integer, Employee> employees = new HashMap<Integer, Employee>();
-    private static Map<Integer, Employee> unionMembers = new ConcurrentHashMap<Integer, Employee>();
+public interface PayrollDatabase {
 
-    public static void addEmployee(final int itsEmpId, final Employee employee) {
-        employees.put(itsEmpId, employee);
-    }
+    void addEmployee(final int itsEmpId, final Employee employee);
 
-    public static Employee getEmployee(final int empId) {
-        Employee employee = employees.get(empId);
-        return employee != null ? employee : Employee.EMPTY;
-    }
+    Employee getEmployee(final int empId);
 
-    public static void deleteEmployee(final int empId) {
-        employees.remove(empId);
-    }
+    void deleteEmployee(final int empId);
 
-    public static void addUnionMember(final int memberId, final Employee employee) {
-        unionMembers.put(memberId, employee);
-    }
+    void addUnionMember(final int memberId, final Employee employee);
 
-    public static Employee getUnionMember(final int memberId) {
-        Employee employee = unionMembers.get(memberId);
-        return employee != null ? employee : Employee.EMPTY;
-    }
+    Employee getUnionMember(final int memberId);
 
-    public static void removeUnionMember(final int memberId) {
-        unionMembers.remove(memberId);
-    }
+    void removeUnionMember(final int memberId);
 
+    Collection<Employee> getAllEmployees();
 
-    public static Collection<Employee> getAllEmployees() {
-        return employees.values();
+    class GlobalInstance {
+        public static PayrollDatabase GlobalPayrollDatabase;
     }
 }

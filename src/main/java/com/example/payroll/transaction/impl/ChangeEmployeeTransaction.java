@@ -1,8 +1,9 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.model.Employee;
 import com.example.payroll.transaction.Transaction;
+
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
 
 public abstract class ChangeEmployeeTransaction implements Transaction {
     private final int empId;
@@ -13,7 +14,7 @@ public abstract class ChangeEmployeeTransaction implements Transaction {
 
 
     public void execute() {
-        Employee employee = PayrollDatabase.getEmployee(empId);
+        Employee employee = GlobalPayrollDatabase.getEmployee(empId);
         if(employee != Employee.EMPTY) {
             change(employee);
         }

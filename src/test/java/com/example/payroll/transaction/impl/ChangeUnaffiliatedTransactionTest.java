@@ -1,17 +1,18 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Employee;
 import com.example.payroll.model.impl.NoAffiliation;
+import com.example.payroll.transaction.BaseTransactionTest;
 import com.example.payroll.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ChangeUnaffiliatedTransactionTest {
+public class ChangeUnaffiliatedTransactionTest extends BaseTransactionTest {
     private Transaction transaction;
 
     @Before
@@ -28,14 +29,14 @@ public class ChangeUnaffiliatedTransactionTest {
         transaction.execute();
         transaction = new ChangeMemberTransaction(empId, memberId, dues);
         transaction.execute();
-        Employee member = PayrollDatabase.getUnionMember(memberId);
+        Employee member = GlobalPayrollDatabase.getUnionMember(memberId);
         assertThat(member, is(not(Employee.EMPTY)));
         transaction = new ChangeUnaffiliatedTransaction(empId);
         transaction.execute();
-        Employee employee = PayrollDatabase.getEmployee(empId);
+        Employee employee = GlobalPayrollDatabase.getEmployee(empId);
         assertThat(employee, is(not(nullValue())));
         assertThat(employee.getAffiliation(), is(instanceOf(NoAffiliation.class)));
-        member = PayrollDatabase.getUnionMember(memberId);
+        member = GlobalPayrollDatabase.getUnionMember(memberId);
         assertThat(member, is(Employee.EMPTY));
     }
 }

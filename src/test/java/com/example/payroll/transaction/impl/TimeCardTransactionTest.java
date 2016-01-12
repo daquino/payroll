@@ -1,20 +1,21 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.db.PayrollDatabaseUtils;
 import com.example.payroll.model.Employee;
 import com.example.payroll.model.TimeCard;
 import com.example.payroll.model.impl.HourlyClassification;
+import com.example.payroll.transaction.BaseTransactionTest;
 import com.example.payroll.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
 
+import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TimeCardTransactionTest {
+public class TimeCardTransactionTest extends BaseTransactionTest {
     private Transaction transaction;
 
     @Before
@@ -29,7 +30,7 @@ public class TimeCardTransactionTest {
         transaction.execute();
         transaction = new TimeCardTransaction(LocalDate.of(2015, 12, 28), 8.0, empId);
         transaction.execute();
-        Employee employee = PayrollDatabase.getEmployee(empId);
+        Employee employee = GlobalPayrollDatabase.getEmployee(empId);
         assertThat(employee, is(not(nullValue())));
         HourlyClassification classification = (HourlyClassification) employee.getPaymentClassification();
         assertThat(classification, is(not(nullValue())));
