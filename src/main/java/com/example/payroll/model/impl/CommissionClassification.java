@@ -8,17 +8,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommissionClassification implements PaymentClassification {
     private final double salary;
     private final double commissionRate;
-    private List<SalesReceipt> salesReceipts;
+    private Map<LocalDateTime, SalesReceipt> salesReceipts;
 
     public CommissionClassification(final double salary, final double commissionRate) {
         this.salary = salary;
         this.commissionRate = commissionRate;
-        this.salesReceipts = new ArrayList<SalesReceipt>();
+        this.salesReceipts = new HashMap<LocalDateTime, SalesReceipt>();
     }
 
     public double getSalary() {
@@ -30,18 +31,11 @@ public class CommissionClassification implements PaymentClassification {
     }
 
     public SalesReceipt getSalesReceipt(final LocalDateTime salesDate) {
-        SalesReceipt receipt = null;
-        for (SalesReceipt salesReceipt : salesReceipts) {
-            if (salesReceipt.getSalesDate().equals(salesDate.truncatedTo(ChronoUnit.MINUTES))) {
-                receipt = salesReceipt;
-                break;
-            }
-        }
-        return receipt;
+        return salesReceipts.getOrDefault(salesDate, SalesReceipt.EMPTY);
     }
 
-    public void addSalesReceipt(final SalesReceipt salesReceipt) {
-        salesReceipts.add(salesReceipt);
+    public void addSalesReceipt(final LocalDateTime salesDate, final double salesAmount) {
+        salesReceipts.put(salesDate, new SalesReceipt(salesDate, salesAmount));
     }
 
     public double calculatePay(final LocalDate payPeriodStartDate, final LocalDate payPeriodEndDate) {
@@ -52,7 +46,7 @@ public class CommissionClassification implements PaymentClassification {
 
     private BigDecimal calculateCommissionTotal(final LocalDate payPeriodStartDate, final LocalDate payPeriodEndDate) {
         BigDecimal commission = BigDecimal.ZERO;
-        for (SalesReceipt salesReceipt : salesReceipts) {
+        for (SalesReceipt salesReceipt : salesReceipts.values()) {
             if (isWithinPeriod(payPeriodStartDate, payPeriodEndDate, salesReceipt.getSalesDate())) {
                 commission = commission.add(new BigDecimal(salesReceipt.getAmount())
                         .multiply(new BigDecimal(commissionRate))

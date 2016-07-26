@@ -1,8 +1,6 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.model.Employee;
-import com.example.payroll.model.TimeCard;
 import com.example.payroll.model.impl.HourlyClassification;
 import com.example.payroll.transaction.Transaction;
 
@@ -26,7 +24,7 @@ public class TimeCardTransaction implements Transaction {
         if(employee != Employee.EMPTY) {
             if(employee.getPaymentClassification() instanceof HourlyClassification) {
                 HourlyClassification classification = (HourlyClassification) employee.getPaymentClassification();
-                classification.addTimeCard(new TimeCard(date, hours));
+                classification.addTimeCard(date, hours);
             }
             else {
                 throw new RuntimeException("Tried to add timecard to non-hourly employee.");

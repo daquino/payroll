@@ -1,13 +1,10 @@
 package com.example.payroll.transaction.impl;
 
-import com.example.payroll.db.PayrollDatabase;
 import com.example.payroll.model.Employee;
-import com.example.payroll.model.SalesReceipt;
 import com.example.payroll.model.impl.CommissionClassification;
 import com.example.payroll.transaction.Transaction;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import static com.example.payroll.db.PayrollDatabase.GlobalInstance.GlobalPayrollDatabase;
 
@@ -26,7 +23,7 @@ public class SalesReceiptTransaction implements Transaction {
         if(employee != Employee.EMPTY) {
             if(employee.getPaymentClassification() instanceof  CommissionClassification) {
                 CommissionClassification commissionClassification = (CommissionClassification) employee.getPaymentClassification();
-                commissionClassification.addSalesReceipt(new SalesReceipt(salesDate, salesAmount));
+                commissionClassification.addSalesReceipt(salesDate, salesAmount);
             }
             else {
                 throw new RuntimeException("Tried to add sales receipt to non-commissioned employee.");
